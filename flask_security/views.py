@@ -95,7 +95,10 @@ def logout():
     if current_user.is_authenticated:
         logout_user()
 
-    return redirect(get_post_logout_redirect())
+    if config_value('VIEWLESS_API', False):
+        return jsonify({'message': 'success'}), 200
+    else:
+        return redirect(get_post_logout_redirect())
 
 
 @anonymous_user_required
